@@ -13,14 +13,14 @@ from requests.auth import AuthBase
 
 
 class HMACAuth(AuthBase):
-  def __init__(self, api_key, api_secret, api_version):
+  def __init__(self, api_key, api_secret, api_version, timestamp):
     self.api_key = api_key
     self.api_secret = api_secret
     self.api_version = api_version
+    self.timestamp = timestamp
 
   def __call__(self, request):
-    timestamp = str(int(time.time()))
-    message = timestamp + request.method + request.path_url + (request.body or '')
+    message = self.timestamp + request.method + request.path_url + (request.body or '')
     secret = self.api_secret
 
     if not isinstance(message, bytes):
@@ -33,7 +33,7 @@ class HMACAuth(AuthBase):
       to_native_string('CB-VERSION'): self.api_version,
       to_native_string('CB-ACCESS-KEY'): self.api_key,
       to_native_string('CB-ACCESS-SIGN'): signature,
-      to_native_string('CB-ACCESS-TIMESTAMP'): timestamp,
+      to_native_string('CB-ACCESS-TIMESTAMP'): self.timestamp,
     })
     return request
 

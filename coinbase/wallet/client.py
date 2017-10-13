@@ -81,7 +81,7 @@ class Client(object):
     self.API_VERSION = api_version or self.API_VERSION
 
     # Set up a requests session for interacting with the API.
-    self.session = self._build_session(HMACAuth, api_key, api_secret, self.API_VERSION)
+    self.session = self._build_session(HMACAuth, api_key, api_secret, self.API_VERSION, self.get_time()['epoch'])
 
   def _build_session(self, auth_class, *args, **kwargs):
     """Internal helper for creating a requests `session` with the correct
