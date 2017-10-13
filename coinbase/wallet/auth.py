@@ -21,7 +21,7 @@ class HMACAuth(AuthBase):
 
   def __call__(self, request):
     epoch = datetime.datetime.utcfromtimestamp(0)
-    timestamp = int((datetime.datetime.utcnow() - epoch).total_seconds()) - 67 #added by mcarthur to match timestamp with coinbase
+    timestamp = str(int((datetime.datetime.utcnow() - epoch).total_seconds()) - 67) #added by mcarthur to match timestamp with coinbase
 
     message = timestamp + request.method + request.path_url + (request.body or '')
     secret = self.api_secret
