@@ -65,7 +65,7 @@ class Client(object):
   VERIFY_SSL = True
 
   BASE_API_URI = 'https://api.coinbase.com/'
-  API_VERSION = '2016-02-18'
+  API_VERSION = '2017-09-27'
 
   cached_callback_public_key = None
 
@@ -81,7 +81,7 @@ class Client(object):
     self.API_VERSION = api_version or self.API_VERSION
 
     # Set up a requests session for interacting with the API.
-    self.session = self._build_session(HMACAuth, api_key, api_secret, self.API_VERSION, self.get_time()['epoch'])
+    self.session = self._build_session(HMACAuth, api_key, api_secret, self.API_VERSION)
 
   def _build_session(self, auth_class, *args, **kwargs):
     """Internal helper for creating a requests `session` with the correct
